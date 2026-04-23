@@ -1,11 +1,25 @@
 // Los Controller Controlan rutas, son los encargados de escuchar la solicitud y emitir una respuesta.
 
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 
 @Controller('cars')
 export class CarsController {
+	private cars = ['Toyota', 'Honda', 'Jeep'];
+
 	@Get()
 	getAllCars() {
-		return ['Toyota', 'Honda', 'Jeep'];
+		return this.cars;
+	}
+
+	@Get(':id')
+	GetCarById(@Param('id') id: string) {
+		let car = this.cars[+id];
+
+		if (!car) {
+			car = 'Auto no asignado';
+		}
+
+		console.log({ id, car });
+		return { id, car };
 	}
 }
