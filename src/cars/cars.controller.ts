@@ -18,10 +18,6 @@ export class CarsController {
 		// 	return { id: '?', car: 'Auto no encontrado' };
 		// }
 
-		console.log({ id, car: this.carsService.findOneById(id) });
-
-		throw new Error('Auxilio');
-
 		return this.carsService.findOneById(id);
 	}
 }
