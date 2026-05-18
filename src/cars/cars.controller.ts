@@ -16,6 +16,9 @@ import {
 import { CarsService } from './cars.service';
 import { CreateCarDto } from './dto/create-car.dto';
 
+// Hasta donde entiendo en .controller.ts van los métodos del protocolo HTTP para el endpoint cars
+// y en service van las funciones
+
 @Controller('cars')
 export class CarsController {
 	constructor(private readonly carsService: CarsService) {}
@@ -31,9 +34,9 @@ export class CarsController {
 	}
 
 	@Post()
-	// @UsePipes(ValidationPipe)
+	// @UsePipes(ValidationPipe), se cambió esta validación local del endpoint por una validación global, ahora se verifican todos los endpoints
 	createCar(@Body() createCarDto: CreateCarDto) {
-		return createCarDto;
+		return this.carsService.create(createCarDto);
 	}
 
 	@Patch(':id')
