@@ -31,7 +31,7 @@ export class CarsController {
 	}
 
 	@Post()
-	@UsePipes(ValidationPipe)
+	// @UsePipes(ValidationPipe)
 	createCar(@Body() createCarDto: CreateCarDto) {
 		return createCarDto;
 	}
