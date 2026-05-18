@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+	BadRequestException,
+	Injectable,
+	NotFoundException,
+} from '@nestjs/common';
 import { Car } from './interfaces/car.interface';
 import { v4 as uuid } from 'uuid';
 import { CreateCarDto, UpdateCarDto } from './dto';
@@ -45,5 +49,26 @@ export class CarsService {
 		return this.cars[newCar - 1];
 	}
 
-	update(id: string, updateCarDto: UpdateCarDto) {}
+	update(id: string, updateCarDto: UpdateCarDto) {
+		let carDB = this.findOneById(id); // sí pasa esta línea, significa que tenemos el auto a modificar, sí no se lanzó la excepción
+
+		// por sí intentan cambiar el id, cuando usemos bases de datos, esto no será necesario
+		if (updateCarDto.id && updateCarDto.id !== id)
+			throw new BadRequestException('Car id is no valid inside body');
+
+		this.cars = this.cars.map((car) => {
+			if (car.id === id) {
+				carDB = {
+					...carDB,
+					...updateCarDto, // sobre escribe las propiedades que estaban en carDB con las que vienen
+					id, // para que no lo sobrescriban, en caso de que hayan enviado uno que parezca uuid
+				};
+				return carDB;
+			}
+
+			return car;
+		});
+
+		return carDB; // carro actualizado
+	}
 }
