@@ -15,6 +15,7 @@ import {
 } from '@nestjs/common';
 import { CarsService } from './cars.service';
 import { CreateCarDto } from './dto/create-car.dto';
+import { UpdateCarDto } from './dto/update-car.dto copy';
 
 // Hasta donde entiendo en .controller.ts van los métodos del protocolo HTTP para el endpoint cars
 // y en service van las funciones
@@ -40,8 +41,11 @@ export class CarsController {
 	}
 
 	@Patch(':id')
-	updateCar(@Param('id', ParseUUIDPipe) id: string, @Body() body: any) {
-		return body;
+	updateCar(
+		@Param('id', ParseUUIDPipe) id: string,
+		@Body() updateCarDto: UpdateCarDto,
+	) {
+		return updateCarDto;
 	}
 
 	@Delete(':id')
