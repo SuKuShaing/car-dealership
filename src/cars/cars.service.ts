@@ -71,4 +71,10 @@ export class CarsService {
 
 		return carDB; // carro actualizado
 	}
+
+	delete(id: string) {
+		const carToDelete = this.findOneById(id); // Sí pasa esta línea, el auto con ese id existe
+
+		this.cars = this.cars.filter((car) => car.id !== id);
+	}
 }
